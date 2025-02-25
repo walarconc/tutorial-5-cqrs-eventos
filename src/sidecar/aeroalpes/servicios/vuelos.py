@@ -19,7 +19,7 @@ class Vuelos(VuelosServicer):
 
     def CrearReserva(self, request, context):
         dict_obj = MessageToDict(request, preserving_proto_field_name=True)
-
+        print("Entra Servicio CrearReserva y llamando Endpoint")
         r = requests.post(f'{self.REST_API_HOST}{self.REST_API_ENDPOINT}', json=dict_obj)
         if r.status_code == 200:
             respuesta = json.loads(r.text)
