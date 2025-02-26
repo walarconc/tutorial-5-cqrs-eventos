@@ -18,10 +18,15 @@ class Despachador:
         print(mensaje)
         print(topico)
         print(schema)
+        print("======ENTRAAAAAA _publicar_mensaje EN PULSAR:")
+        print(mensaje)
+        print(topico)
+        print(schema)
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
         publicador = cliente.create_producer(topico, schema=AvroSchema(EventoReservaCreada))
         publicador.send(mensaje)
         cliente.close()
+        print("======FINNNNN _publicar_mensaje")
         print("======FINNNNN _publicar_mensaje")
 
     def publicar_evento(self, evento, topico):
@@ -38,8 +43,12 @@ class Despachador:
         evento_integracion = EventoReservaCreada(data=payload)
         self._publicar_mensaje(evento_integracion, topico, AvroSchema(EventoReservaCreada))
         print("======FINNNNN publicar_evento")
+        print("======FINNNNN publicar_evento")
 
     def publicar_comando(self, comando, topico):
+        print("======ENTRAAAAAA publicar_comando EN PULSAR")
+        print(comando)
+        print(topico)
         print("======ENTRAAAAAA publicar_comando EN PULSAR")
         print(comando)
         print(topico)
@@ -50,4 +59,5 @@ class Despachador:
         )
         comando_integracion = ComandoCrearReserva(data=payload)
         self._publicar_mensaje(comando_integracion, topico, AvroSchema(ComandoCrearReserva))
+        print("======FINNNNN publicar_comando")
         print("======FINNNNN publicar_comando")
