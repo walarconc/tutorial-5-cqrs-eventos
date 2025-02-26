@@ -14,7 +14,7 @@ def unix_time_millis(dt):
 
 class Despachador:
     def _publicar_mensaje(self, mensaje, topico, schema):
-        print("======ENTRAAAAAA _publicar_mensaje mensaje:")
+        print("======ENTRAAAAAA _publicar_mensaje EN PULSAR:")
         print(mensaje)
         print(topico)
         print(schema)
@@ -22,11 +22,11 @@ class Despachador:
         publicador = cliente.create_producer(topico, schema=AvroSchema(EventoReservaCreada))
         publicador.send(mensaje)
         cliente.close()
-        print("======FINNNNN _publicar_mensaje mensaje:")
+        print("======FINNNNN _publicar_mensaje")
 
     def publicar_evento(self, evento, topico):
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
-        print("======ENTRAAAAAA publicar_evento")
+        print("======ENTRAAAAAA publicar_evento EN PULSAR")
         print(evento)
         print(topico)
         payload = ReservaCreadaPayload(
@@ -40,8 +40,8 @@ class Despachador:
         print("======FINNNNN publicar_evento")
 
     def publicar_comando(self, comando, topico):
-        print("======ENTRAAAAAA publicar_comando")
-        print(evento)
+        print("======ENTRAAAAAA publicar_comando EN PULSAR")
+        print(comando)
         print(topico)
         # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
         payload = ComandoCrearReservaPayload(
