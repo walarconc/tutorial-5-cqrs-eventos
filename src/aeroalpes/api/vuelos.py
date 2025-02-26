@@ -17,7 +17,9 @@ bp = api.crear_blueprint('vuelos', '/vuelos')
 @bp.route('/reserva', methods=('POST',))
 def reservar():
     try:
-        print("Entra Endpoint: " + request.json)
+        print("===========Entra Endpoint reservar===============")
+        print(request.json)
+        print("===================================")
         reserva_dict = request.json
 
         map_reserva = MapeadorReservaDTOJson()
@@ -33,6 +35,9 @@ def reservar():
 @bp.route('/reserva-comando', methods=('POST',))
 def reservar_asincrona():
     try:
+        print("===========Entra Endpoint reservar_asincrona===============")
+        print(request.json)
+        print("===================================")
         reserva_dict = request.json
 
         map_reserva = MapeadorReservaDTOJson()
@@ -51,6 +56,8 @@ def reservar_asincrona():
 @bp.route('/reserva', methods=('GET',))
 @bp.route('/reserva/<id>', methods=('GET',))
 def dar_reserva(id=None):
+    print("===========Entra Endpoint dar_reserva===============id " + id)
+    print("===================================")
     if id:
         sr = ServicioReserva()
         map_reserva = MapeadorReservaDTOJson()
@@ -62,6 +69,8 @@ def dar_reserva(id=None):
 @bp.route('/reserva-query', methods=('GET',))
 @bp.route('/reserva-query/<id>', methods=('GET',))
 def dar_reserva_usando_query(id=None):
+    print("===========Entra Endpoint dar_reserva_usando_query=============== id " + id)
+    print("===================================")
     if id:
         query_resultado = ejecutar_query(ObtenerReserva(id))
         map_reserva = MapeadorReservaDTOJson()
