@@ -37,6 +37,7 @@ def reservar_asincrona():
     try:
         print("===========Entra Endpoint reservar_asincrona===============")
         print(request.json)
+        print("===================================")
         reserva_dict = request.json
 
         map_reserva = MapeadorReservaDTOJson()
@@ -47,31 +48,7 @@ def reservar_asincrona():
         # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
         # Revise la clase Despachador de la capa de infraestructura
         ejecutar_commando(comando)
-        print("============FIN EJECUTAR COMANDO=======================")
+        
         return Response('{}', status=202, mimetype='application/json')
     except ExcepcionDominio as e:
         return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')
-
-@bp.route('/reserva', methods=('GET',))
-@bp.route('/reserva/<id>', methods=('GET',))
-def dar_reserva(id=None):
-    print("===========Entra Endpoint dar_reserva===============id " + id)
-    if id:
-        sr = ServicioReserva()
-        map_reserva = MapeadorReservaDTOJson()
-        
-        return map_reserva.dto_a_externo(sr.obtener_reserva_por_id(id))
-    else:
-        return [{'message': 'GET!'}]
-
-@bp.route('/reserva-query', methods=('GET',))
-@bp.route('/reserva-query/<id>', methods=('GET',))
-def dar_reserva_usando_query(id=None):
-    print("===========Entra Endpoint dar_reserva_usando_query=============== id " + id)
-    if id:
-        query_resultado = ejecutar_query(ObtenerReserva(id))
-        map_reserva = MapeadorReservaDTOJson()
-        
-        return map_reserva.dto_a_externo(query_resultado.resultado)
-    else:
-        return [{'message': 'GET!'}]

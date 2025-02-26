@@ -19,5 +19,6 @@ class ObtenerReservaHandler(ReservaQueryBaseHandler):
 
 @query.register(ObtenerReserva)
 def ejecutar_query_obtener_reserva(query: ObtenerReserva):
+    print("ACA EJECUTA COMANDO HANDLRES FOR ObtenerReservaHandler")
     handler = ObtenerReservaHandler()
     return handler.handle(query)

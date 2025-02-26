@@ -38,6 +38,7 @@ class CrearReservaHandler(CrearReservaBaseHandler):
 
 @comando.register(CrearReserva)
 def ejecutar_comando_crear_reserva(comando: CrearReserva):
+    print("ACA EJECUTA COMANDO HANDLRES FOR CrearReservaHandler")
     handler = CrearReservaHandler()
     handler.handle(comando)
     
