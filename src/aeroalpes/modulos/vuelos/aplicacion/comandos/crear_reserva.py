@@ -20,6 +20,7 @@ class CrearReserva(Comando):
 class CrearReservaHandler(CrearReservaBaseHandler):
     
     def handle(self, comando: CrearReserva):
+        print("===============================ACA EJECUTA COMANDO HANDLRES FOR CrearReservaHandler")
         reserva_dto = ReservaDTO(
                 fecha_actualizacion=comando.fecha_actualizacion
             ,   fecha_creacion=comando.fecha_creacion
@@ -38,7 +39,7 @@ class CrearReservaHandler(CrearReservaBaseHandler):
 
 @comando.register(CrearReserva)
 def ejecutar_comando_crear_reserva(comando: CrearReserva):
-    print("ACA EJECUTA COMANDO HANDLRES FOR CrearReservaHandler")
+    print("============ENTRA HANDLRES FOR CrearReservaHandler")
     handler = CrearReservaHandler()
     handler.handle(comando)
     

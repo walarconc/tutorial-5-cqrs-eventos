@@ -16,11 +16,12 @@ from dataclasses import dataclass
 @dataclass
 class _FabricaReserva(Fabrica):
     def crear_objeto(self, obj: any, mapeador: Mapeador) -> any:
+        print(f"=========VALIDAR LAS REGLAS entidad : {type(obj)}")
         if isinstance(obj, Entidad):
             return mapeador.entidad_a_dto(obj)
         else:
             reserva: Reserva = mapeador.dto_a_entidad(obj)
-
+            print(f"=========VALIDAR LAS REGLAS atributos {obj.__dict__}")
             self.validar_regla(MinimoUnItinerario(reserva.itinerarios))
             [self.validar_regla(RutaValida(ruta)) for itin in reserva.itinerarios for odo in itin.odos for segmento in odo.segmentos for ruta in segmento.legs]
             
