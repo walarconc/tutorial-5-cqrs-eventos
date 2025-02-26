@@ -10,7 +10,7 @@ from aeroalpes.modulos.vuelos.infraestructura.schema.v1.comandos import ComandoC
 from aeroalpes.seedwork.infraestructura import utils
 
 def suscribirse_a_eventos():
-    prin("SUSCRIBIDNOSE A ESCUCHAR EVENETOS PULSSAR")
+    print("SUSCRIBIDNOSE A ESCUCHAR EVENETOS PULSSAR")
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
@@ -30,7 +30,7 @@ def suscribirse_a_eventos():
             cliente.close()
 
 def suscribirse_a_comandos():
-    prin("SUSCRIBIDNOSE A ESCUCHAR COMANDOS PULSSAR")
+    print("SUSCRIBIDNOSE A ESCUCHAR COMANDOS PULSSAR")
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
