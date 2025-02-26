@@ -1,10 +1,12 @@
+from aeroalpes.modulos.auditoria.aplicacion.mapeadores import MapeadorAuditoriaDTOJson
+from aeroalpes.modulos.auditoria.comandos.crear_regulacion import CrearRegulacion
 import aeroalpes.seedwork.presentacion.api as api
 import json
 from aeroalpes.modulos.vuelos.aplicacion.servicios import ServicioReserva
 from aeroalpes.modulos.vuelos.aplicacion.dto import ReservaDTO
 from aeroalpes.seedwork.dominio.excepciones import ExcepcionDominio
 
-from flask import redirect, render_template, request, session, url_for
+from flask import request
 from flask import Response
 from aeroalpes.modulos.vuelos.aplicacion.mapeadores import MapeadorReservaDTOJson
 from aeroalpes.modulos.vuelos.aplicacion.comandos.crear_reserva import CrearReserva
@@ -12,38 +14,20 @@ from aeroalpes.modulos.vuelos.aplicacion.queries.obtener_reserva import ObtenerR
 from aeroalpes.seedwork.aplicacion.comandos import ejecutar_commando
 from aeroalpes.seedwork.aplicacion.queries import ejecutar_query
 
-bp = api.crear_blueprint('vuelos', '/vuelos')
+bp = api.crear_blueprint('auditoria', '/auditoria')
 
-@bp.route('/reserva', methods=('POST',))
-def reservar():
+@bp.route('/auditoria-comando', methods=('POST',))
+def auditoria_asincrona():
     try:
-        print("===========Entra Endpoint reservar===============")
+        print("===========Entra Endpoint auditoria_asincrona===============")
         print(request.json)
         print("===================================")
-        reserva_dict = request.json
+        regulacion_dict = request.json
 
-        map_reserva = MapeadorReservaDTOJson()
-        reserva_dto = map_reserva.externo_a_dto(reserva_dict)
+        map_regulacion = MapeadorAuditoriaDTOJson()
+        regulacion_dto = map_regulacion.externo_a_dto(regulacion_dict)
 
-        sr = ServicioReserva()
-        dto_final = sr.crear_reserva(reserva_dto)
-
-        return map_reserva.dto_a_externo(dto_final)
-    except ExcepcionDominio as e:
-        return Response(json.dumps(dict(error=str(e))), status=400, mimetype='application/json')
-
-@bp.route('/reserva-comando', methods=('POST',))
-def reservar_asincrona():
-    try:
-        print("===========Entra Endpoint reservar_asincrona===============")
-        print(request.json)
-        print("===================================")
-        reserva_dict = request.json
-
-        map_reserva = MapeadorReservaDTOJson()
-        reserva_dto = map_reserva.externo_a_dto(reserva_dict)
-
-        comando = CrearReserva(reserva_dto.fecha_creacion, reserva_dto.fecha_actualizacion, reserva_dto.id, reserva_dto.itinerarios)
+        comando = CrearRegulacion(regulacion_dto.id, regulacion_dto.nombre, regulacion_dto.region, regulacion_dto.version, regulacion_dto.requisitos, regulacion_dto.fecha_actualizacion)
         
         # TODO Reemplaze es todo código sincrono y use el broker de eventos para propagar este comando de forma asíncrona
         # Revise la clase Despachador de la capa de infraestructura
